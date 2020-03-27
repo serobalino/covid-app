@@ -14,5 +14,6 @@ web-report/
 .DS_Store
 
 .idea
+.vs
 package-lock.json
 yarn-lock.json
