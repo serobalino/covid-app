@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Ejemplo App",
-    "slug": "ejemplo",
+    "name": "Covid App",
+    "slug": "reactnative",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -25,6 +25,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Example App",
+    "githubUrl": "https://github.com/serobalino/covid-app"
   }
 }
