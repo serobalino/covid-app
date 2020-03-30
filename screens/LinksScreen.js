@@ -20,7 +20,7 @@ export default function LinksScreen({ route }) {
           {datos.name}
         </Text>
       </View>
-      {datos.map((l, i) => (
+      {datos.data.map((l, i) => (
         <ListItem
           key={i}
           title={
