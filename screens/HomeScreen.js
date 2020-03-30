@@ -5,23 +5,28 @@ import * as servicios from '../servicios';
 import { ListItem, Input } from 'react-native-elements';
 
 export default function HomeScreen({ navigation }) {
-  const [list, setList] = useState(null);
-  const [filterlist, setFilterlist] = useState({});
+  const [list, setList] = useState([]);
+  const [filterlist, setFilterlist] = useState([]);
+
   useEffect(() => {
     servicios.paises.tiempo().then(response => {
-      setList(Object.keys(response.data));
-      setFilterlist(response.data);
+      let aux = [];
+      Object.keys(response.data).map((key)=> {
+        aux.push({name: key, data: response.data[key]})
+      });
+      setList(aux);
+      setFilterlist(aux);
     });
   }, []);
 
   function seleccionar(item) {
-    navigation.navigate('Links', { data: filterlist[item] });
+    navigation.navigate('Links', { data: item });
   }
   function buscar(texto) {
-    setList(
-      Object.keys(filterlist).filter(
-        post => post.toLowerCase().indexOf(texto.toLowerCase()) !== -1
-      )
+    setFilterlist(
+        list.filter(
+            post => post.name.toLowerCase().indexOf(texto.toLowerCase()) !== -1
+        )
     );
   }
   return (
@@ -35,18 +40,18 @@ export default function HomeScreen({ navigation }) {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
-        {list &&
-          list.map((item, index) => (
-            <ListItem
-              key={index}
-              title={item}
-              onPress={() => {
-                seleccionar(item);
-              }}
-              bottomDivider
-              chevron
-            />
-          ))}
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          {filterlist.map((item,index) => (
+                <ListItem
+                    key={index}
+                    title={item.name}
+                    onPress={() => {seleccionar(item)}}
+                    bottomDivider
+                    chevron
+                />
+            ))
+          }
+        </ScrollView>
       </ScrollView>
     </View>
   );
